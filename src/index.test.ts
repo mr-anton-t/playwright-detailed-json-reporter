@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
 import { basename, dirname, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
@@ -11,6 +12,11 @@ import type { DetailedJsonReport, ReportSuite, ReportTest } from './types.js';
 function allTests(suites: ReportSuite[]): ReportTest[] {
   return suites.flatMap((suite) => [...suite.tests, ...allTests(suite.suites)]);
 }
+
+test('resolves from Playwright CommonJS configuration loading', () => {
+  const reporterPath = createRequire(import.meta.url).resolve('playwright-detailed-json-reporter');
+  assert.equal(reporterPath, resolve('dist/index.js'));
+});
 
 test('writes detailed Playwright data and copies artifacts', async () => {
   const temporaryDirectory = await mkdtemp(resolve(tmpdir(), 'detailed-json-reporter-'));
