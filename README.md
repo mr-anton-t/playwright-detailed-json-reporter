@@ -26,6 +26,14 @@ npm run build
 
 ## Configuration
 
+Install the reporter from GitHub:
+
+```bash
+npm install --save-dev github:mr-anton-t/playwright-detailed-json-reporter
+```
+
+Add it to `playwright.config.ts` by its package name:
+
 ```ts
 import { defineConfig } from '@playwright/test';
 
@@ -33,7 +41,7 @@ export default defineConfig({
   reporter: [
     ['html', { outputFolder: 'build/report', open: 'never' }],
     [
-      './reporter-pw/playwright-detailed-json-reporter/dist/index.js',
+      'playwright-detailed-json-reporter',
       {
         outputFile: 'build/detailed-json/report.json',
         artifactsDir: 'build/detailed-json/artifacts',
@@ -48,6 +56,8 @@ export default defineConfig({
   },
 });
 ```
+
+The output paths are resolved from Playwright's `rootDir`. If tests run in Docker, install the dependency inside the image with `npm ci`; host `node_modules` are not available in the container.
 
 No additional hooks are required for `toHaveScreenshot()`. When a comparison fails, Playwright creates attachments for the expected, actual, and diff images.
 
