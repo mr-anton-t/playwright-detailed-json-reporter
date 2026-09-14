@@ -1,0 +1,34 @@
+import type { FullConfig, FullResult, Reporter, Suite, TestError } from '@playwright/test/reporter';
+import type { ReporterOptions } from './types.js';
+export type { DetailedJsonReport, ReporterOptions } from './types.js';
+export default class DetailedJsonReporter implements Reporter {
+    private readonly options;
+    private config?;
+    private rootSuite?;
+    private readonly globalErrors;
+    private readonly sourceCache;
+    private readonly artifactCache;
+    private outputFile;
+    private artifactsDir;
+    constructor(options?: ReporterOptions);
+    onBegin(config: FullConfig, suite: Suite): void;
+    onError(error: TestError): void;
+    onEnd(result: FullResult): Promise<void>;
+    printsToStdio(): boolean;
+    private serializeSuite;
+    private serializeTest;
+    private serializeResult;
+    private serializeStep;
+    private serializeError;
+    private annotation;
+    private attachment;
+    private storeAttachment;
+    private attachmentKind;
+    private screenshotRole;
+    private snapshotName;
+    private extension;
+    private outputChunk;
+    private location;
+    private source;
+    private jsonValue;
+}
