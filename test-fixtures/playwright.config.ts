@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test';
 import { resolve } from 'node:path';
 
 export default defineConfig({
-  testDir: '.',
+  testDir: './specs',
   testMatch: 'reporter.fixture.ts',
   outputDir: process.env.TEST_OUTPUT,
   retries: 1,

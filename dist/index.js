@@ -24,9 +24,10 @@ export default class DetailedJsonReporter {
     onBegin(config, suite) {
         this.config = config;
         this.rootSuite = suite;
-        this.outputFile = resolve(config.rootDir, this.options.outputFile);
+        const configDir = config.configFile ? dirname(config.configFile) : config.rootDir;
+        this.outputFile = resolve(configDir, this.options.outputFile);
         this.artifactsDir = this.options.artifactsDir
-            ? resolve(config.rootDir, this.options.artifactsDir)
+            ? resolve(configDir, this.options.artifactsDir)
             : resolve(dirname(this.outputFile), 'artifacts');
     }
     onError(error) {

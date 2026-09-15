@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { tmpdir } from 'node:os';
-import { basename, dirname, resolve } from 'node:path';
+import { basename, dirname, relative, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { test } from 'node:test';
 
@@ -22,6 +22,7 @@ test('writes detailed Playwright data and copies artifacts', async () => {
   const temporaryDirectory = await mkdtemp(resolve(tmpdir(), 'detailed-json-reporter-'));
   const outputFile = resolve(temporaryDirectory, 'report.json');
   const artifactsDir = resolve(temporaryDirectory, 'artifacts');
+  const configDirectory = resolve('test-fixtures');
   const cli = resolve('node_modules/@playwright/test/cli.js');
 
   try {
@@ -30,8 +31,8 @@ test('writes detailed Playwright data and copies artifacts', async () => {
       encoding: 'utf8',
       env: {
         ...process.env,
-        REPORT_OUTPUT: outputFile,
-        REPORT_ARTIFACTS: artifactsDir,
+        REPORT_OUTPUT: relative(configDirectory, outputFile),
+        REPORT_ARTIFACTS: relative(configDirectory, artifactsDir),
         TEST_OUTPUT: resolve(temporaryDirectory, 'test-results'),
       },
     });
