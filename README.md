@@ -69,13 +69,18 @@ Top-level fields:
 {
   "schemaName": "playwright-detailed-json",
   "schemaVersion": 1,
-  "generatedAt": "2026-09-14T00:00:00.000Z",
+  "generatedAt": "2026-09-17T00:03:39.081Z",
+  "config": {
+    "metadata": {
+      "productVersion": "26.3.0",
+      "edition": "CE"
+    }
+  },
   "run": {},
-  "config": {},
   "projects": [],
   "suites": [],
   "errors": []
 }
 ```
 
-The format is versioned and uses only the public Playwright Reporter API.
+The report is a single JSON object, not an array. All top-level fields shown above are always present. The format is versioned and uses only the public Playwright Reporter API.

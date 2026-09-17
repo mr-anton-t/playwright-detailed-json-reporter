@@ -15,6 +15,7 @@ import { basename, dirname, extname, isAbsolute, relative, resolve, sep } from '
 import type {
   AttachmentKind,
   DetailedJsonReport,
+  JsonObject,
   JsonValue,
   OutputChunk,
   ReportAnnotation,
@@ -81,16 +82,16 @@ export default class DetailedJsonReporter implements Reporter {
       schemaName: 'playwright-detailed-json',
       schemaVersion: 1,
       generatedAt: new Date().toISOString(),
-      run: {
-        status: result.status,
-        startTime: result.startTime.toISOString(),
-        duration: result.duration,
-      },
       config: {
         rootDir: slash(this.config.rootDir),
         ...(this.config.configFile ? { configFile: slash(this.config.configFile) } : {}),
         workers: this.config.workers,
-        metadata: this.jsonValue(this.config.metadata),
+        metadata: this.jsonObject(this.config.metadata),
+      },
+      run: {
+        status: result.status,
+        startTime: result.startTime.toISOString(),
+        duration: result.duration,
       },
       projects: this.config.projects.map((project) => ({
         name: project.name,
@@ -335,5 +336,10 @@ export default class DetailedJsonReporter implements Reporter {
     } catch {
       return {};
     }
+  }
+
+  private jsonObject(value: unknown): JsonObject {
+    const serialized = this.jsonValue(value);
+    return serialized !== null && typeof serialized === 'object' && !Array.isArray(serialized) ? serialized : {};
   }
 }

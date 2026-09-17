@@ -38,9 +38,19 @@ test('writes detailed Playwright data and copies artifacts', async () => {
     });
     assert.equal(run.status, 1, run.stderr || run.stdout);
 
-    const report = JSON.parse(await readFile(outputFile, 'utf8')) as DetailedJsonReport;
+    const parsed = JSON.parse(await readFile(outputFile, 'utf8')) as unknown;
+    assert.equal(typeof parsed, 'object');
+    assert.notEqual(parsed, null);
+    assert.equal(Array.isArray(parsed), false);
+    const report = parsed as DetailedJsonReport;
+    for (const field of ['schemaName', 'schemaVersion', 'generatedAt', 'config', 'run', 'projects', 'suites', 'errors']) {
+      assert.equal(Object.hasOwn(report, field), true, `missing required field: ${field}`);
+    }
     assert.equal(report.schemaName, 'playwright-detailed-json');
     assert.equal(report.schemaVersion, 1);
+    assert.equal(Number.isNaN(Date.parse(report.generatedAt)), false);
+    assert.equal(report.config.metadata.productVersion, '26.3.0');
+    assert.equal(report.config.metadata.edition, 'CE');
     assert.equal(report.run.status, 'failed');
 
     const [reportedTest] = allTests(report.suites);

@@ -31,4 +31,5 @@ export default class DetailedJsonReporter implements Reporter {
     private location;
     private source;
     private jsonValue;
+    private jsonObject;
 }

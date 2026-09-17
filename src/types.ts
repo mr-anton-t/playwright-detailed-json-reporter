@@ -1,4 +1,5 @@
-export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
+export type JsonObject = { [key: string]: JsonValue };
+export type JsonValue = null | boolean | number | string | JsonValue[] | JsonObject;
 
 export interface ReporterOptions {
   outputFile?: string;
@@ -110,16 +111,16 @@ export interface DetailedJsonReport {
   schemaName: 'playwright-detailed-json';
   schemaVersion: 1;
   generatedAt: string;
-  run: {
-    status: string;
-    startTime: string;
-    duration: number;
-  };
   config: {
     rootDir: string;
     configFile?: string;
     workers: number;
-    metadata: JsonValue;
+    metadata: JsonObject;
+  };
+  run: {
+    status: string;
+    startTime: string;
+    duration: number;
   };
   projects: Array<{
     name: string;
