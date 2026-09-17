@@ -1,10 +1,11 @@
 export type JsonObject = { [key: string]: JsonValue };
 export type JsonValue = null | boolean | number | string | JsonValue[] | JsonObject;
 export type ReportType = 'regular' | 'clean' | 'local' | '';
-export type ReportMetadata = JsonObject & {
+export type ReportMetadata = {
+  [key: string]: JsonValue | undefined;
   productVersion?: string;
   edition?: string;
-  type?: ReportType;
+  type?: ReportType | null | undefined;
 };
 
 export interface ReporterOptions {

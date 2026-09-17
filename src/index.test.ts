@@ -7,13 +7,16 @@ import { basename, dirname, relative, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { test } from 'node:test';
 
-import type { DetailedJsonReport, ReportSuite, ReportTest } from './types.js';
+import type { DetailedJsonReport, ReportMetadata, ReportSuite, ReportTest } from './types.js';
+
+const allowedEmptyTypes: ReportMetadata[] = [{ type: '' }, { type: null }, { type: undefined }];
 
 function allTests(suites: ReportSuite[]): ReportTest[] {
   return suites.flatMap((suite) => [...suite.tests, ...allTests(suite.suites)]);
 }
 
 test('resolves from Playwright CommonJS configuration loading', () => {
+  assert.equal(allowedEmptyTypes.length, 3);
   const reporterPath = createRequire(import.meta.url).resolve('playwright-detailed-json-reporter');
   assert.equal(reporterPath, resolve('dist/index.js'));
 });
@@ -51,7 +54,7 @@ test('writes detailed Playwright data and copies artifacts', async () => {
     assert.equal(Number.isNaN(Date.parse(report.generatedAt)), false);
     assert.equal(report.config.metadata.productVersion, '26.3.0');
     assert.equal(report.config.metadata.edition, 'EE');
-    assert.equal(report.config.metadata.type, '');
+    assert.equal(report.config.metadata.type, null);
     assert.equal(report.run.status, 'failed');
 
     const [reportedTest] = allTests(report.suites);

@@ -41,7 +41,7 @@ export default defineConfig({
   metadata: {
     productVersion: '26.3.0',
     edition: 'EE',
-    type: 'clean', // regular, clean, local, or an empty string
+    type: 'clean', // regular, clean, local, empty string, null, or undefined
   },
   reporter: [
     ['html', { outputFolder: 'build/report', open: 'never' }],
@@ -65,6 +65,8 @@ export default defineConfig({
 Relative output paths are resolved from the directory containing `playwright.config.ts`. When Playwright runs without a configuration file, the reporter falls back to `rootDir`. If tests run in Docker, install the dependency inside the image with `npm ci`; host `node_modules` are not available in the container.
 
 No additional hooks are required for `toHaveScreenshot()`. When a comparison fails, Playwright creates attachments for the expected, actual, and diff images.
+
+For `metadata.type`, an empty string and `null` are preserved as-is. An `undefined` value is omitted from `report.json`, following standard JSON serialization rules.
 
 ## Access metadata in tests
 
