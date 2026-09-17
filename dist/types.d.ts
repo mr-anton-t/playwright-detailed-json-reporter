@@ -2,6 +2,12 @@ export type JsonObject = {
     [key: string]: JsonValue;
 };
 export type JsonValue = null | boolean | number | string | JsonValue[] | JsonObject;
+export type ReportType = 'regular' | 'clean' | 'local';
+export type ReportMetadata = JsonObject & {
+    productVersion?: string;
+    edition?: string;
+    type?: ReportType;
+};
 export interface ReporterOptions {
     outputFile?: string;
     artifactsDir?: string;
@@ -104,7 +110,7 @@ export interface DetailedJsonReport {
         rootDir: string;
         configFile?: string;
         workers: number;
-        metadata: JsonObject;
+        metadata: ReportMetadata;
     };
     run: {
         status: string;

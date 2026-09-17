@@ -38,6 +38,11 @@ Add it to `playwright.config.ts` by its package name:
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
+  metadata: {
+    productVersion: '26.3.0',
+    edition: 'EE',
+    type: 'clean', // regular, clean, or local
+  },
   reporter: [
     ['html', { outputFolder: 'build/report', open: 'never' }],
     [
@@ -73,7 +78,8 @@ Top-level fields:
   "config": {
     "metadata": {
       "productVersion": "26.3.0",
-      "edition": "CE"
+      "edition": "EE",
+      "type": "clean"
     }
   },
   "run": {},
