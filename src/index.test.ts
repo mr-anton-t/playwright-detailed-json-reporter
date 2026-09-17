@@ -51,7 +51,7 @@ test('writes detailed Playwright data and copies artifacts', async () => {
     assert.equal(Number.isNaN(Date.parse(report.generatedAt)), false);
     assert.equal(report.config.metadata.productVersion, '26.3.0');
     assert.equal(report.config.metadata.edition, 'EE');
-    assert.equal(report.config.metadata.type, 'clean');
+    assert.equal(report.config.metadata.type, '');
     assert.equal(report.run.status, 'failed');
 
     const [reportedTest] = allTests(report.suites);

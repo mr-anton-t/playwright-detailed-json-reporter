@@ -2,7 +2,7 @@ export type JsonObject = {
     [key: string]: JsonValue;
 };
 export type JsonValue = null | boolean | number | string | JsonValue[] | JsonObject;
-export type ReportType = 'regular' | 'clean' | 'local';
+export type ReportType = 'regular' | 'clean' | 'local' | '';
 export type ReportMetadata = JsonObject & {
     productVersion?: string;
     edition?: string;

@@ -31,7 +31,7 @@ import type {
   TestAttempt,
 } from './types.js';
 
-export type { DetailedJsonReport, ReporterOptions } from './types.js';
+export type { DetailedJsonReport, ReporterOptions, ReportMetadata, ReportType } from './types.js';
 
 type Attachment = TestResult['attachments'][number];
 

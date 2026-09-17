@@ -2,7 +2,7 @@ import { defineConfig } from '@playwright/test';
 import { resolve } from 'node:path';
 
 export default defineConfig({
-  metadata: { productVersion: '26.3.0', edition: 'EE', type: 'clean' },
+  metadata: { productVersion: '26.3.0', edition: 'EE', type: '' },
   testDir: './specs',
   testMatch: 'reporter.fixture.ts',
   outputDir: process.env.TEST_OUTPUT,

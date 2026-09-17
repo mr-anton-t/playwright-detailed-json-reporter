@@ -1,6 +1,6 @@
 import type { FullConfig, FullResult, Reporter, Suite, TestError } from '@playwright/test/reporter';
 import type { ReporterOptions } from './types.js';
-export type { DetailedJsonReport, ReporterOptions } from './types.js';
+export type { DetailedJsonReport, ReporterOptions, ReportMetadata, ReportType } from './types.js';
 export default class DetailedJsonReporter implements Reporter {
     private readonly options;
     private config?;
