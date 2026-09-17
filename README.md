@@ -40,6 +40,7 @@ import { defineConfig } from '@playwright/test';
 export default defineConfig({
   metadata: {
     productVersion: '26.3.0',
+    productBranch: 'main', // optional
     edition: 'EE',
     type: 'clean', // regular, clean, local, empty string, null, or undefined
   },
@@ -77,8 +78,9 @@ import type { ReportMetadata } from 'playwright-detailed-json-reporter';
 test('uses the product version', async ({ page }, testInfo) => {
   const metadata = testInfo.config.metadata as ReportMetadata;
   const productVersion = metadata.productVersion;
+  const productBranch = metadata.productBranch;
 
-  await page.goto(`/about?version=${productVersion}`);
+  await page.goto(`/about?version=${productVersion}&branch=${productBranch}`);
 });
 ```
 
@@ -94,6 +96,7 @@ Top-level fields:
   "config": {
     "metadata": {
       "productVersion": "26.3.0",
+      "productBranch": "main",
       "edition": "EE",
       "type": "clean"
     }

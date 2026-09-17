@@ -6,6 +6,7 @@ export type ReportType = 'regular' | 'clean' | 'local' | '';
 export type ReportMetadata = {
     [key: string]: JsonValue | undefined;
     productVersion?: string;
+    productBranch?: string;
     edition?: string;
     type?: ReportType | null | undefined;
 };
